@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wall of Fame - Paradise Roleplay Pakistan</title>
+    <title>Staff - Paradise Roleplay Pakistan</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -18,257 +18,223 @@
     <link rel="stylesheet" href="theme.css">
     <link rel="stylesheet" href="effects.css">
     <style>
-        /* Wall of Fame specific styles */
-        .timeline {
-            position: relative;
-            max-width: 1000px;
+        /* Staff page specific styles */
+        .staff-container {
+            max-width: 1200px;
             margin: 40px auto;
-            padding: 0 20px;
+            padding: 0 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
         }
         
-        .timeline::before {
+        .staff-tier {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .tier-label {
+            width: 100%;
+            text-align: center;
+            color: var(--primary);
+            font-size: clamp(1.2rem, 5vw, 1.8rem);
+            margin-bottom: 25px;
+            position: relative;
+            font-weight: 600;
+        }
+        
+        .tier-label:after {
             content: '';
             position: absolute;
-            width: 4px;
-            background: linear-gradient(to bottom, var(--primary), var(--primary-dark));
-            top: 0;
-            bottom: 0;
+            width: clamp(100px, 50%, 200px);
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            bottom: -8px;
             left: 50%;
-            margin-left: -2px;
-            border-radius: 10px;
-            animation: linePulse 3s infinite;
+            transform: translateX(-50%);
+            border-radius: 3px;
+            animation: linePulse 2s infinite alternate;
         }
         
         @keyframes linePulse {
-            0% { opacity: 0.8; }
-            50% { opacity: 1; }
-            100% { opacity: 0.8; }
+            0% {
+                opacity: 0.7;
+                width: clamp(100px, 50%, 200px);
+            }
+            100% {
+                opacity: 1;
+                width: clamp(120px, 55%, 220px);
+            }
         }
         
-        /* Achievements */
-        .achievement {
-            padding: 20px 40px;
-            position: relative;
-            width: 50%;
-            box-sizing: border-box;
-            margin-bottom: 40px;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.5s ease;
-        }
-        
-        .achievement.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .achievement:nth-child(odd) {
-            left: 0;
-            text-align: right;
-            padding-right: 70px;
-        }
-        
-        .achievement:nth-child(even) {
-            left: 50%;
-            text-align: left;
-            padding-left: 70px;
-        }
-        
-        .achievement-content {
+        .staff-card {
             background: var(--glass);
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
-            position: relative;
-            border-left: 4px solid var(--primary);
-            backdrop-filter: blur(8px);
-            transition: all 0.3s;
-        }
-        
-        .achievement:nth-child(even) .achievement-content {
-            border-left: none;
-            border-right: 4px solid var(--primary);
-        }
-        
-        .achievement-content:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 30px rgba(0, 204, 255, 0.2);
-        }
-        
-        .achievement-title {
-            color: var(--primary);
-            font-size: clamp(1.1rem, 3vw, 1.4rem);
-            margin-bottom: 10px;
-            font-weight: 700;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .achievement-title::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background: var(--primary);
-            transition: width 0.3s;
-        }
-        
-        .achievement:nth-child(even) .achievement-title::after {
-            left: auto;
-            right: 0;
-        }
-        
-        .achievement-content:hover .achievement-title::after {
-            width: 100px;
-        }
-        
-        .achievement-gang {
-            display: inline-block;
-            background: rgba(0, 204, 255, 0.2);
-            color: var(--primary);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: clamp(0.8rem, 2vw, 0.9rem);
-            margin-bottom: 15px;
-            border: 1px solid rgba(0, 204, 255, 0.3);
-            transition: all 0.3s;
-        }
-        
-        .achievement-content:hover .achievement-gang {
-            background: rgba(0, 204, 255, 0.3);
-            box-shadow: 0 0 10px rgba(0, 204, 255, 0.2);
-        }
-        
-        .achievement-date {
-            font-size: clamp(0.8rem, 2vw, 0.9rem);
-            opacity: 0.8;
-            margin-bottom: 15px;
-            display: block;
-        }
-        
-        .achievement-image {
-            width: 100%;
-            height: 200px;
-            border-radius: 5px;
-            margin-top: 15px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            background-size: cover;
-            background-position: center;
-        }
-        
-        .achievement-image::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 60%;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-        }
-        
-        .achievement::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: var(--primary);
-            border-radius: 50%;
-            top: 30px;
-            z-index: 1;
-            box-shadow: 0 0 0 4px rgba(0, 204, 255, 0.3);
-            transition: all 0.3s;
-        }
-        
-        .achievement:nth-child(odd)::after {
-            right: -12px;
-        }
-        
-        .achievement:nth-child(even)::after {
-            left: -12px;
-        }
-        
-        .achievement:hover::after {
-            transform: scale(1.2);
-            box-shadow: 0 0 0 6px rgba(0, 204, 255, 0.3);
-        }
-        
-        /* Month Dividers */
-        .month-divider {
+            border-radius: 8px;
+            width: clamp(160px, 30vw, 240px);
+            padding: 20px;
             text-align: center;
-            margin: 60px 0 30px;
-            position: relative;
-            clear: both;
-        }
-        
-        .month-divider h2 {
-            display: inline-block;
-            background: var(--glass);
-            padding: 10px 30px;
-            border-radius: 30px;
-            color: var(--primary);
-            font-size: clamp(1rem, 3vw, 1.2rem);
-            border: 1px solid rgba(0, 204, 255, 0.3);
+            transition: all 0.3s ease;
+            border-top: 3px solid var(--primary);
+            backdrop-filter: blur(5px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        
-        /* Floating particles */
-        .bg-particle {
-            position: absolute;
-            background: rgba(0, 204, 255, 0.1);
-            border-radius: 50%;
-            pointer-events: none;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(20px);
             opacity: 0;
-            animation: float 15s infinite linear;
+            animation: cardAppear 0.5s forwards;
         }
         
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        @keyframes cardAppear {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
         
-        /* Responsive */
-        @media (max-width: 768px) {
-            .timeline::before {
-                left: 31px;
+        .staff-tier:nth-child(1) .staff-card { animation-delay: 0.1s; }
+        .staff-tier:nth-child(2) .staff-card:nth-child(1) { animation-delay: 0.2s; }
+        .staff-tier:nth-child(2) .staff-card:nth-child(2) { animation-delay: 0.3s; }
+        .staff-tier:nth-child(2) .staff-card:nth-child(3) { animation-delay: 0.4s; }
+        
+        .staff-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,204,255,0.1) 0%, rgba(0,204,255,0) 70%);
+            animation: cardGlow 6s infinite linear;
+            z-index: 0;
+        }
+        
+        @keyframes cardGlow {
+            0% {
+                transform: rotate(0deg) translate(-30%, -30%);
             }
-            
-            .achievement {
-                width: 100%;
-                padding-left: 70px;
-                padding-right: 25px;
-                text-align: left;
+            100% {
+                transform: rotate(360deg) translate(-30%, -30%);
             }
-            
-            .achievement:nth-child(even) {
-                left: 0;
+        }
+        
+        .staff-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 204, 255, 0.3);
+        }
+        
+        .staff-card img {
+            width: clamp(80px, 20vw, 120px);
+            height: clamp(80px, 20vw, 120px);
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+        
+        .staff-card:hover img {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 204, 255, 0.5);
+        }
+        
+        .staff-role {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .staff-name {
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Owner Card */
+        .owner-card {
+            width: clamp(220px, 60vw, 320px);
+            border-top-width: 4px;
+            border-top-color: var(--gold);
+            box-shadow: 0 0 25px rgba(0, 204, 255, 0.5);
+            animation: ownerGlow 3s infinite alternate;
+        }
+        
+        @keyframes ownerGlow {
+            0% {
+                box-shadow: 0 0 25px rgba(0, 204, 255, 0.5);
             }
-            
-            .achievement:nth-child(odd)::after,
-            .achievement:nth-child(even)::after {
-                left: 19px;
+            100% {
+                box-shadow: 0 0 40px rgba(0, 204, 255, 0.8);
             }
-            
-            .achievement:nth-child(odd) .achievement-content,
-            .achievement:nth-child(even) .achievement-content {
-                border-left: 4px solid var(--primary);
-                border-right: none;
-            }
-            
-            .achievement:nth-child(odd) .achievement-title::after,
-            .achievement:nth-child(even) .achievement-title::after {
-                left: 0;
-                right: auto;
-            }
+        }
+        
+        .owner-card img {
+            width: clamp(100px, 25vw, 150px);
+            height: clamp(100px, 25vw, 150px);
+            border-width: 4px;
+        }
+        
+        /* FIB Staff */
+        .fib-staff .staff-card {
+            border-top-color: var(--secondary);
+        }
+        
+        .fib-staff .staff-card::before {
+            background: radial-gradient(circle, rgba(255,51,102,0.1) 0%, rgba(255,51,102,0) 70%);
+        }
+        
+        .fib-staff .staff-card:hover {
+            box-shadow: 0 10px 25px rgba(255, 51, 102, 0.3);
+        }
+        
+        .fib-staff .staff-card img {
+            border-color: var(--secondary);
+        }
+        
+        .fib-staff .staff-card:hover img {
+            box-shadow: 0 0 20px rgba(255, 51, 102, 0.5);
+        }
+        
+        .fib-staff .staff-role {
+            color: var(--secondary);
+        }
+        
+        /* EMS Staff */
+        .ems-staff .staff-card {
+            border-top-color: var(--gta-pink);
+        }
+        
+        .ems-staff .staff-card::before {
+            background: radial-gradient(circle, rgba(250,2,113,0.1) 0%, rgba(250,2,113,0) 70%);
+        }
+        
+        .ems-staff .staff-card:hover {
+            box-shadow: 0 10px 25px rgba(250, 2, 113, 0.3);
+        }
+        
+        .ems-staff .staff-card img {
+            border-color: var(--gta-pink);
+        }
+        
+        .ems-staff .staff-card:hover img {
+            box-shadow: 0 0 20px rgba(250, 2, 113, 0.5);
+        }
+        
+        .ems-staff .staff-role {
+            color: var(--gta-pink);
         }
     </style>
 </head>
-<body data-page="wall-of-fame">
+<body data-page="staff">
     <!-- Theme Toggle -->
     <div class="theme-toggle">
         <input type="checkbox" id="theme-switch">
@@ -280,7 +246,7 @@
     </div>
 
     <!-- Background Effects -->
-    <div class="background-effects" id="bgAnimation">
+    <div class="background-effects">
         <div class="neon-grid"></div>
         <div class="city-skyline"></div>
         <div class="overlay"></div>
@@ -288,8 +254,8 @@
     
     <header class="header" data-aos="fade-in" data-aos-duration="1500">
         <div class="header-content">
-            <h1 class="glitch-text" data-text="WALL OF FAME">WALL OF FAME</h1>
-            <p class="subtitle" data-aos="fade-up" data-aos-delay="300">Chronicles of Dominance - Where Legends Are Made</p>
+            <h1 class="glitch-text" data-text="STAFF HIERARCHY">STAFF HIERARCHY</h1>
+            <p class="subtitle" data-aos="fade-up" data-aos-delay="300">Meet the team behind Paradise Roleplay Pakistan</p>
         </div>
     </header>
     
@@ -299,70 +265,15 @@
             <a href="index.html" class="nav-btn"><i class="fas fa-home"></i> Home</a>
             <a href="about.html" class="nav-btn"><i class="fas fa-info-circle"></i> About</a>
             <a href="rules/index.html" class="nav-btn"><i class="fas fa-book"></i> Rules</a>
-            <a href="staff.html" class="nav-btn"><i class="fas fa-users"></i> Staff</a>
+            <a href="staff.html" class="nav-btn active"><i class="fas fa-users"></i> Staff</a>
             <a href="gangs.html" class="nav-btn"><i class="fas fa-mask"></i> Gangs</a>
             <a href="faction.html" class="nav-btn"><i class="fas fa-shield-alt"></i> Factions</a>
-            <a href="wall-of-fame.html" class="nav-btn active"><i class="fas fa-trophy"></i> Wall of Fame</a>
+            <a href="wall-of-fame.html" class="nav-btn"><i class="fas fa-trophy"></i> Wall of Fame</a>
             <a href="events.html" class="nav-btn"><i class="fas fa-calendar-alt"></i> Events</a>
         </div>
     </nav>
     
     <div class="main-content">
-        <div class="container">
-            <div class="timeline">
-                <!-- November 2024 -->
-                <div class="month-divider">
-                    <h2>November 2024</h2>
-                </div>
-                
-                <div class="achievement" data-aos="fade-right">
-                    <div class="achievement-content">
-                        <div class="achievement-title">Kings of Humane Labs</div>
-                        <span class="achievement-gang">Bounty Hunters</span>
-                        <span class="achievement-date">27/11/2024</span>
-                        <div class="achievement-image" style="background-image: url('img/gangs/bounty_hunters.jpg');"></div>
-                    </div>
-                </div>
-                
-                <div class="achievement" data-aos="fade-left">
-                    <div class="achievement-content">
-                        <div class="achievement-title">Winner of Paradise Gang War Season 17</div>
-                        <span class="achievement-gang">Bounty Hunters</span>
-                        <span class="achievement-date">27/11/2024</span>
-                        <div class="achievement-image" style="background-image: url('img/gangs/bounty_hunters.jpg');"></div>
-                    </div>
-                </div>
-                
-                <div class="achievement" data-aos="fade-right">
-                    <div class="achievement-content">
-                        <div class="achievement-title">Winner of Rise of Mafia</div>
-                        <span class="achievement-gang">Bounty Hunters</span>
-                        <span class="achievement-date">27/11/2024</span>
-                        <div class="achievement-image" style="background-image: url('img/gangs/bounty_hunters.jpg');"></div>
-                    </div>
-                </div>
-                
-                <div class="achievement" data-aos="fade-left">
-                    <div class="achievement-content">
-                        <div class="achievement-title">Kings of Cocaine Labs</div>
-                        <span class="achievement-gang">Raees</span>
-                        <span class="achievement-date">30/11/2024</span>
-                        <div class="achievement-image" style="background-image: url('img/gangs/raees.jpg');"></div>
-                    </div>
-                </div>
-                
-                <div class="achievement" data-aos="fade-right">
-                    <div class="achievement-content">
-                        <div class="achievement-title">Kings of Meth Lab</div>
-                        <span class="achievement-gang">Bounty Hunters</span>
-                        <span class="achievement-date">30/11/2024</span>
-                        <div class="achievement-image" style="background-image: url('img/gangs/bounty_hunters.jpg');"></div>
-                    </div>
-                </div>
-                
-                <div class="achievement" data-aos="fade-left">
-                    <div class="achievement-content">
-                        <div class="achievement-title">Kings of Weed Lab</div>
-                        <span class="achievement-gang">LSPDxSWAT</span>
-                        <span class="achievement-date">30/11/2024</span>
-                        <div class="achievement-image" style="background-image: url('img/gangs/l
+        <!-- Staff Container -->
+        <div class="staff-container">
+            
