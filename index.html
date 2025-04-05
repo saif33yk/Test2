@@ -1,253 +1,162 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paradise RP - Home</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <script src="/firebase-config.js"></script>
+</head>
+<body>
+  <h1>Welcome to Paradise RP</h1>
+  <nav>
+    <a href="rules.html">Rules</a>
+    <a href="events.html">Events</a>
+    <a href="announcements.html">Announcements</a>
+    <a href="admin.html">Admin Panel</a>
+  </nav>
+</body>
+</html>
+
+<!-- firebase-config.js -->
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyB1app5adJQCgH4-pZDxEwD9EuTxi0-VA8",
+    authDomain: "paradiserppk.firebaseapp.com",
+    databaseURL: "https://paradiserppk-default-rtdb.firebaseio.com",
+    projectId: "paradiserppk",
+    storageBucket: "paradiserppk.firebasestorage.app",
+    messagingSenderId: "972430724994",
+    appId: "1:972430724994:web:7d0cf093d188ad23b2899b",
+    measurementId: "G-D6E5K1HDRY"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+</script>
+
+<!-- rules.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Rules</title></head>
+<body>
+  <h2>Server Rules</h2>
+  <ul id="rulesList"></ul>
+  <script>
+    db.ref("rules").on("value", snapshot => {
+      const rulesList = document.getElementById("rulesList");
+      rulesList.innerHTML = "";
+      snapshot.forEach(rule => {
+        const li = document.createElement("li");
+        li.textContent = rule.val();
+        rulesList.appendChild(li);
+      });
+    });
+  </script>
+</body>
+</html>
+
+<!-- events.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Events</title></head>
+<body>
+  <h2>Upcoming Events</h2>
+  <ul id="eventList"></ul>
+  <script>
+    db.ref("events").on("value", snapshot => {
+      const eventList = document.getElementById("eventList");
+      eventList.innerHTML = "";
+      snapshot.forEach(event => {
+        const li = document.createElement("li");
+        li.textContent = event.val();
+        eventList.appendChild(li);
+      });
+    });
+  </script>
+</body>
+</html>
+
+<!-- announcements.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Announcements</title></head>
+<body>
+  <h2>Announcements</h2>
+  <ul id="announcementList"></ul>
+  <script>
+    db.ref("announcements").on("value", snapshot => {
+      const announcementList = document.getElementById("announcementList");
+      announcementList.innerHTML = "";
+      snapshot.forEach(announcement => {
+        const li = document.createElement("li");
+        li.textContent = announcement.val();
+        announcementList.appendChild(li);
+      });
+    });
+  </script>
+</body>
+</html>
+
+<!-- admin.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paradise Roleplay | FiveM Server</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="favicon-192x192.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="favicon-512x512.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <link rel="manifest" href="site.webmanifest">
+  <title>Admin Panel</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 </head>
 <body>
-  <!-- Palm Tree Decoration -->
-  <img src="img/palm-tree.png" alt="Palm Tree" class="palm-tree">
-  
-  <!-- Header with Banner -->
-  <header class="header">
-      <div class="header-content">
-          <div class="title-banner"></div>
-          <h1>PARADISE ROLEPLAY</h1>
-          <p>Pakistan's Most Immersive FiveM Roleplay Experience</p>
-          
-          <div class="btn-container">
-              <a href="join.html" class="btn"><i class="fas fa-gamepad"></i> Join Server</a>
-              <a href="https://discord.gg/prpk" class="btn btn-discord"><i class="fab fa-discord"></i> Join Discord</a>
-          </div>
-      </div>
-  </header>
-  
-  <!-- Navigation -->
-  <nav class="nav">
-      <a href="index.html" class="nav-btn active"><i class="fas fa-home"></i> Home</a>
-      <a href="about.html" class="nav-btn"><i class="fas fa-info-circle"></i> About</a>
-      <a href="rules.html" class="nav-btn"><i class="fas fa-book"></i> Rules</a>
-      <a href="staff.html" class="nav-btn"><i class="fas fa-users"></i> Staff</a>
-      <a href="gangs.html" class="nav-btn"><i class="fas fa-mask"></i> Gangs</a>
-      <a href="factions.html" class="nav-btn"><i class="fas fa-shield-alt"></i> Factions</a>
-      <a href="wall-of-fame.html" class="nav-btn"><i class="fas fa-trophy"></i> Wall of Fame</a>
-      <a href="events.html" class="nav-btn"><i class="fas fa-calendar-alt"></i> Events</a>
-  </nav>
-  
-  <!-- Main Content -->
-  <main class="main-content">
-      <!-- Welcome Section -->
-      <section>
-          <h2 class="section-title">Welcome to Paradise</h2>
-          <p class="section-description">
-              Experience the most realistic and immersive FiveM roleplay server in Pakistan with custom scripts, 
-              realistic economy, and authentic roleplay scenarios for all player types.
-          </p>
-          
-          <!-- Updated Stats Section -->
-          <div class="stats-container">
-              <div class="stat-item">
-                  <div class="stat-number">27,000</div>
-                  <div class="stat-label">Discord Members</div>
-              </div>
-              <div class="stat-item">
-                  <div class="stat-number">100</div>
-                  <div class="stat-label">Active Players</div>
-              </div>
-              <div class="stat-item">
-                  <div class="stat-number">50</div>
-                  <div class="stat-label">Active Factions</div>
-              </div>
-              <div class="stat-item">
-                  <div class="stat-number">99.9</div>
-                  <div class="stat-label">Uptime</div>
-              </div>
-          </div>
-      </section>
-      
-      <!-- Custom Cars Slideshow -->
-      <section>
-          <h2 class="section-title">Custom Vehicles</h2>
-          <p class="section-description">
-              Drive exclusive custom vehicles available only on our server with unique handling and modifications
-          </p>
-          
-          <div class="slideshow-container">
-              <div class="slideshow cars-slideshow">
-                  <!-- Car 1 -->
-                  <div class="slide">
-                      <img src="img/cars/car1.jpg" alt="Custom Car" class="slide-image">
-                      <div class="slide-content">
-                          <h3 class="slide-title">Elegy Retro Custom</h3>
-                          <div class="car-stats">
-                              <div class="car-stat">
-                                  <div class="car-stat-value">240mph</div>
-                                  <div class="car-stat-label">Top Speed</div>
-                              </div>
-                              <div class="car-stat">
-                                  <div class="car-stat-value">AWD</div>
-                                  <div class="car-stat-label">Drive</div>
-                              </div>
-                              <div class="car-stat">
-                                  <div class="car-stat-value">S+</div>
-                                  <div class="car-stat-label">Class</div>
-                              </div>
-                          </div>
-                          <a href="vehicles.html#elegy-retro" class="learn-more">Learn More</a>
-                      </div>
-                  </div>
-                  
-                  <!-- Car 2 -->
-                  <div class="slide">
-                      <img src="img/cars/car2.jpg" alt="Custom Car" class="slide-image">
-                      <div class="slide-content">
-                          <h3 class="slide-title">Sentinel Classic</h3>
-                          <div class="car-stats">
-                              <div class="car-stat">
-                                  <div class="car-stat-value">210mph</div>
-                                  <div class="car-stat-label">Top Speed</div>
-                              </div>
-                              <div class="car-stat">
-                                  <div class="car-stat-value">RWD</div>
-                                  <div class="car-stat-label">Drive</div>
-                              </div>
-                              <div class="car-stat">
-                                  <div class="car-stat-value">A</div>
-                                  <div class="car-stat-label">Class</div>
-                              </div>
-                          </div>
-                          <a href="vehicles.html#sentinel-classic" class="learn-more">Learn More</a>
-                      </div>
-                  </div>
-                  
-                  <!-- Car 3 -->
-                  <div class="slide">
-                      <img src="img/cars/car3.jpg" alt="Custom Car" class="slide-image">
-                      <div class="slide-content">
-                          <h3 class="slide-title">Comet Safari</h3>
-                          <div class="car-stats">
-                              <div class="car-stat">
-                                  <div class="car-stat-value">190mph</div>
-                                  <div class="car-stat-label">Top Speed</div>
-                              </div>
-                              <div class="car-stat">
-                                  <div class="car-stat-value">AWD</div>
-                                  <div class="car-stat-label">Drive</div>
-                              </div>
-                              <div class="car-stat">
-                                  <div class="car-stat-value">B</div>
-                                  <div class="car-stat-label">Class</div>
-                              </div>
-                          </div>
-                          <a href="vehicles.html#comet-safari" class="learn-more">Learn More</a>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </section>
-      
-      <!-- Community Highlights Slideshow -->
-      <section>
-          <h2 class="section-title">Community Highlights</h2>
-          <p class="section-description">Featured gangs, factions, staff members, and achievements</p>
-          
-          <div class="slideshow-container">
-              <div class="slideshow community-slideshow">
-                  <!-- Gang Slide -->
-                  <div class="slide">
-                      <img src="img/gangs/bounty_hunters.jpg" alt="Featured Gang" class="slide-image">
-                      <div class="slide-content">
-                          <h3 class="slide-title">Bounty Hunters</h3>
-                          <p class="slide-description">The most decorated gang in Paradise history, holding more event trophies than any other crew.</p>
-                          <a href="gangs.html#bounty-hunters" class="learn-more">Learn More</a>
-                      </div>
-                  </div>
-                  
-                  <!-- Faction Slide -->
-                  <div class="slide">
-                      <img src="img/factions/lspd.jpg" alt="Featured Faction" class="slide-image">
-                      <div class="slide-content">
-                          <h3 class="slide-title">Los Santos Police Department</h3>
-                          <p class="slide-description">Our most active official faction with 25 dedicated officers</p>
-                          <a href="factions.html#lspd" class="learn-more">Learn More</a>
-                      </div>
-                  </div>
-                  
-                  <!-- Staff Slide -->
-                  <div class="slide">
-                      <img src="img/staff/desi_gabru.jpg" alt="Staff Member" class="slide-image">
-                      <div class="slide-content">
-                          <h3 class="slide-title">Desi Gabru</h3>
-                          <p class="slide-description">Server Owner ensuring quality roleplay standards</p>
-                          <a href="staff.html#desi-gabru" class="learn-more">Learn More</a>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </section>
-      
-      <!-- Services Section -->
-      <section class="services">
-          <div class="services-container">
-              <h2 class="section-title">Our Services</h2>
-              <p class="section-description">We provide the best FiveM roleplay experience with these premium services</p>
-              
-              <div class="services-grid">
-                  <div class="service-card">
-                      <div class="service-icon"><i class="fas fa-theater-masks"></i></div>
-                      <h3 class="service-title">Premium Roleplay</h3>
-                      <p class="service-description">
-                          Experience the most immersive roleplay with our custom scripts, realistic economy, and dedicated community.
-                      </p>
-                  </div>
-  
-                  <div class="service-card">
-                      <div class="service-icon"><i class="fas fa-headset"></i></div>
-                      <h3 class="service-title">24/7 Support</h3>
-                      <p class="service-description">
-                          Our dedicated staff team is available around the clock to ensure the best roleplay experience.
-                      </p>
-                  </div>
-                  
-                  <div class="service-card">
-                      <div class="service-icon"><i class="fas fa-calendar-alt"></i></div>
-                      <h3 class="service-title">Regular Events</h3>
-                      <p class="service-description">
-                          Participate in weekly events with amazing prizes and unique roleplay scenarios.
-                      </p>
-                  </div>
-              </div>
-          </div>
-      </section>
-  </main>
-  
-  <!-- Footer -->
-  <footer class="footer">
-      <p>&copy; 2025 Paradise Roleplay Pakistan. All rights reserved.</p>
-      <div class="social-links">
-          <a href="https://discord.gg/prpk" target="_blank"><i class="fab fa-discord"></i></a>
-          <a href="https://www.youtube.com/@paradiseroleplaypk" target="_blank"><i class="fab fa-youtube"></i></a>
-          <a href="https://www.instagram.com/theparadisehug/" target="_blank"><i class="fab fa-instagram"></i></a>
-      </div>
-  </footer>
+  <h2>Admin Login</h2>
+  <div id="loginDiv">
+    <input type="email" id="email" placeholder="Email"><br>
+    <input type="password" id="password" placeholder="Password"><br>
+    <button onclick="login()">Login</button>
+  </div>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <script src="js/main.js"></script>
+  <div id="adminPanel" style="display:none;">
+    <h3>Welcome Admin</h3>
+    <h4>Update Rules</h4>
+    <textarea id="rulesText"></textarea>
+    <button onclick="update('rules')">Save Rules</button>
+
+    <h4>Update Events</h4>
+    <textarea id="eventsText"></textarea>
+    <button onclick="update('events')">Save Events</button>
+
+    <h4>Update Announcements</h4>
+    <textarea id="announcementsText"></textarea>
+    <button onclick="update('announcements')">Save Announcements</button>
+
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    firebase.auth().onAuthStateChanged(user => {
+      if (user && user.email === "saif.amir888@gmail.com") {
+        document.getElementById("loginDiv").style.display = "none";
+        document.getElementById("adminPanel").style.display = "block";
+      }
+    });
+
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      firebase.auth().signInWithEmailAndPassword(email, password).catch(alert);
+    }
+
+    function logout() {
+      firebase.auth().signOut();
+      location.reload();
+    }
+
+    function update(type) {
+      const value = document.getElementById(type + "Text").value;
+      const lines = value.split("\n");
+      db.ref(type).set(lines);
+      alert(type + " updated!");
+    }
+  </script>
 </body>
 </html>
-
