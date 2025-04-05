@@ -1,33 +1,27 @@
-// Main JavaScript file for Paradise Roleplay Pakistan
+// Import CSS
+import "../css/main.css"
 
+// Initialize slideshows if they exist
 document.addEventListener("DOMContentLoaded", () => {
-  // Initialize slideshows if they exist
-  if (document.querySelector(".cars-slideshow")) {
-    $(".cars-slideshow").slick({
-      dots: true,
-      infinite: true,
-      speed: 800,
-      slidesToShow: 1,
-      adaptiveHeight: true,
-      autoplay: true,
-      autoplaySpeed: 5000,
-      arrows: true,
-      cssEase: "cubic-bezier(0.645, 0.045, 0.355, 1)",
-    })
-  }
+  // Check if jQuery is loaded
+  if (typeof jQuery === "undefined") {
+    // Load jQuery if not available
+    const script = document.createElement("script")
+    script.src = "https://code.jquery.com/jquery-3.6.0.min.js"
+    script.onload = () => {
+      // After jQuery is loaded, set it to the window
+      window.jQuery = jQuery
+      window.$ = jQuery
 
-  if (document.querySelector(".community-slideshow")) {
-    $(".community-slideshow").slick({
-      dots: true,
-      infinite: true,
-      speed: 800,
-      slidesToShow: 1,
-      adaptiveHeight: true,
-      autoplay: true,
-      autoplaySpeed: 6000,
-      arrows: true,
-      cssEase: "cubic-bezier(0.645, 0.045, 0.355, 1)",
-    })
+      // Load Slick after jQuery
+      const slickScript = document.createElement("script")
+      slickScript.src = "https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
+      slickScript.onload = initSliders
+      document.head.appendChild(slickScript)
+    }
+    document.head.appendChild(script)
+  } else {
+    initSliders()
   }
 
   // Animate stats numbers
@@ -111,44 +105,33 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 })
 
-// Import jQuery (if not already included) or declare $
-if (typeof jQuery == "undefined") {
-  var script = document.createElement("script")
-  script.src = "https://code.jquery.com/jquery-3.6.0.min.js"
-  script.type = "text/javascript"
-  document.getElementsByTagName("head")[0].appendChild(script)
+// Initialize sliders function
+function initSliders() {
+  if (document.querySelector(".cars-slideshow")) {
+    $(".cars-slideshow").slick({
+      dots: true,
+      infinite: true,
+      speed: 800,
+      slidesToShow: 1,
+      adaptiveHeight: true,
+      autoplay: true,
+      autoplaySpeed: 5000,
+      arrows: true,
+      cssEase: "cubic-bezier(0.645, 0.045, 0.355, 1)",
+    })
+  }
 
-  // Optional: Add a delay to ensure jQuery is loaded before Slick initializes
-  script.onload = () => {
-    var $ = jQuery // Declare $ after jQuery is loaded
-    $(document).ready(() => {
-      if (document.querySelector(".cars-slideshow")) {
-        $(".cars-slideshow").slick({
-          dots: true,
-          infinite: true,
-          speed: 800,
-          slidesToShow: 1,
-          adaptiveHeight: true,
-          autoplay: true,
-          autoplaySpeed: 5000,
-          arrows: true,
-          cssEase: "cubic-bezier(0.645, 0.045, 0.355, 1)",
-        })
-      }
-
-      if (document.querySelector(".community-slideshow")) {
-        $(".community-slideshow").slick({
-          dots: true,
-          infinite: true,
-          speed: 800,
-          slidesToShow: 1,
-          adaptiveHeight: true,
-          autoplay: true,
-          autoplaySpeed: 6000,
-          arrows: true,
-          cssEase: "cubic-bezier(0.645, 0.045, 0.355, 1)",
-        })
-      }
+  if (document.querySelector(".community-slideshow")) {
+    $(".community-slideshow").slick({
+      dots: true,
+      infinite: true,
+      speed: 800,
+      slidesToShow: 1,
+      adaptiveHeight: true,
+      autoplay: true,
+      autoplaySpeed: 6000,
+      arrows: true,
+      cssEase: "cubic-bezier(0.645, 0.045, 0.355, 1)",
     })
   }
 }
