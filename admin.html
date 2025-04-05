@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <script src="firebase-config.js"></script>
+</head>
+<body>
+  <h2>Admin Login</h2>
+  <div id="loginDiv">
+    <input type="email" id="email" placeholder="Email"><br>
+    <input type="password" id="password" placeholder="Password"><br>
+    <button onclick="login()">Login</button>
+  </div>
+
+  <div id="adminPanel" style="display:none;">
+    <h3>Welcome Admin</h3>
+
+    <h4>Update Rules</h4>
+    <textarea id="rulesText"></textarea>
+    <button onclick="update('rules')">Save Rules</button>
+
+    <h4>Update Events</h4>
+    <textarea id="eventsText"></textarea>
+    <button onclick="update('events')">Save Events</button>
+
+    <h4>Update Announcements</h4>
+    <textarea id="announcementsText"></textarea>
+    <button onclick="update('announcements')">Save Announcements</button>
+
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    firebase.auth().onAuthStateChanged(user => {
+      if (user && user.email === "saif.amir888@gmail.com") {
+        document.getElementById("loginDiv").style.display = "none";
+        document.getElementById("adminPanel").style.display = "block";
+      }
+    });
+
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      firebase.auth().signInWithEmailAndPassword(email, password).catch(alert);
+    }
+
+    function logout() {
+      firebase.auth().signOut();
+      location.reload();
+    }
+
+    function update(type) {
+      const value = document.getElementById(type + "Text").value;
+      const lines = value.split("\\n");
+      db.ref(type).set(lines);
+      alert(type + " updated!");
+    }
+  </script>
+</body>
+</html>
