@@ -234,6 +234,153 @@ body {
   transition: all 0.3s;
 }
 
+/* Slideshow */
+.slideshow-container {
+  margin: 40px 0;
+  position: relative;
+}
+
+.slideshow {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.slide {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.slide-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.slide-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+  border-radius: 0 0 10px 10px;
+}
+
+.slide-title {
+  color: var(--gold);
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.slide-description {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 15px;
+}
+
+.car-stats {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0;
+  max-width: 400px;
+}
+
+.car-stat {
+  text-align: center;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.car-stat-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.car-stat-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+}
+
+.learn-more {
+  display: inline-block;
+  padding: 8px 20px;
+  background: var(--gold);
+  color: var(--black);
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.learn-more:hover {
+  background: var(--dark-gold);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+}
+
+/* Services Section */
+.services {
+  padding: 40px 0;
+}
+
+.services-container {
+  background: var(--glass);
+  border-radius: 15px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border-top: 3px solid var(--gold);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.service-card {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  transition: all 0.4s ease;
+  border: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 215, 0, 0.3);
+}
+
+.service-icon {
+  font-size: 2.5rem;
+  color: var(--gold);
+  margin-bottom: 20px;
+  transition: all 0.4s ease;
+}
+
+.service-card:hover .service-icon {
+  transform: scale(1.2);
+}
+
+.service-title {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: var(--gold);
+}
+
+.service-description {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
 /* About Page */
 .about-container {
   max-width: 900px;
