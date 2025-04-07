@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff - Paradise RP Pakistan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --gold: #FFD700;
+            --dark-gold: #D4AF37;
+            --black: #121212;
+            --glass: rgba(18, 18, 18, 0.95);
+            --red: #ff4444;
+            --discord: #5865F2;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background: var(--black);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7));
+            text-align: center;
+            padding: 100px 20px;
+            border-bottom: 4px solid var(--gold);
+            height: auto;
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,215,0,0.1) 0%, rgba(255,215,0,0) 100%);
+            z-index: 0;
+            animation: gradientPulse 8s infinite alternate;
+        }
+        
+        @keyframes gradientPulse {
+            0% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 0.1;
+            }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+        
+        .header h1 {
+            font-size: clamp(2rem, 6vw, 3rem);
+            color: var(--gold);
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            margin-bottom: 15px;
+            font-weight: 700;
+            animation: titleGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            from {
+                text-shadow: 0 0 10px rgba(255, 215, 0, 0.5),
+                             0 0 20px rgba(255, 215, 0, 0.3);
+            }
+            to {
+                text-shadow: 0 0 15px rgba(255, 215, 0, 0.7),
+                             0 0 30px rgba(255, 215, 0, 0.4);
+            }
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: white;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+            animation: fadeIn 1.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Navigation */
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            padding: 15px 5px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+            border-bottom: 1px solid rgba(255,215,0,0.2);
+        }
+        
+        .nav-btn {
+            color: white;
+            text-decoration: none;
+            margin: 5px 8px;
+            font-weight: 600;
+            padding: 12px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.8px;
+            white-space: nowrap;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,215,0,0.1);
+        }
+        
+        .nav-btn:hover {
+            background: linear-gradient(135deg, rgba(255,215,0,0.3), rgba(212,175,55,0.3));
+            color: var(--gold);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+            border-color: rgba(255,215,0,0.3);
+        }
+        
+        .nav-btn.active {
+            background: linear-gradient(135deg, var(--gold), var(--dark-gold));
+            color: var(--black);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+        
+        .nav-btn i {
+            margin-right: 8px;
+        }
+        
+        /* Staff Container */
+        .staff-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .staff-tier {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+        
+        .tier-label {
+            width: 100%;
+            text-align: center;
+            color: var(--gold);
+            font-size: clamp(1.2rem, 5vw, 1.8rem);
+            margin-bottom: 25px;
+            position: relative;
+            font-weight: 600;
+        }
+        
+        .tier-label:after {
+            content: '';
+            position: absolute;
+            width: clamp(100px, 50%, 200px);
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--dark-gold));
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px;
+            animation: linePulse 2s infinite alternate;
+        }
+        
+        @keyframes linePulse {
+            0% {
+                opacity: 0.7;
+                width: clamp(100px, 50%, 200px);
+            }
+            100% {
+                opacity: 1;
+                width: clamp(120px, 55%, 220px);
+            }
+        }
+        
+        .staff-card {
+            background: var(--glass);
+            border-radius: 8px;
+            width: clamp(160px, 30vw, 240px);
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border-top: 3px solid var(--gold);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .staff-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, rgba(255,215,0,0) 70%);
+            animation: cardGlow 6s infinite linear;
+            z-index: 0;
+        }
+        
+        @keyframes cardGlow {
+            0% {
+                transform: rotate(0deg) translate(-30%, -30%);
+            }
+            100% {
+                transform: rotate(360deg) translate(-30%, -30%);
+            }
+        }
+        
+        .staff-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+        }
+        
+        .staff-card img {
+            width: clamp(80px, 20vw, 120px);
+            height: clamp(80px, 20vw, 120px);
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid var(--gold);
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+        
+        .staff-card:hover img {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+        
+        .staff-role {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .staff-name {
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Owner Card */
+        .owner-card {
+            width: clamp(220px, 60vw, 320px);
+            border-top-width: 4px;
+            border-top-color: var(--dark-gold);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+            animation: ownerGlow 3s infinite alternate;
+        }
+        
+        @keyframes ownerGlow {
+            0% {
+                box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+            }
+            100% {
+                box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+            }
+        }
+        
+        .owner-card img {
+            width: clamp(100px, 25vw, 150px);
+            height: clamp(100px, 25vw, 150px);
+            border-width: 4px;
+        }
+        
+        /* Buttons */
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--gold), var(--dark-gold));
+            color: var(--black);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            margin: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0.3) 0%,
+                rgba(255,255,255,0) 60%
+            );
+            transform: rotate(30deg);
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn-discord {
+            background: linear-gradient(135deg, var(--discord), #4752C4);
+            color: white;
+            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.3);
+        }
+        
+        .btn-discord:hover {
+            box-shadow: 0 8px 20px rgba(88, 101, 242, 0.4);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 25px;
+            background: var(--glass);
+            border-top: 1px solid rgba(255,215,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .footer p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+        
+        .social-links {
+            margin-top: 15px;
+        }
+        
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--gold);
+            transform: translateY(-3px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 80px 15px;
+                min-height: 300px;
+            }
+            
+            .nav-btn {
+                padding: 10px 15px;
+                font-size: 0.75rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                padding: 60px 15px;
+                min-height: 250px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 0.7rem;
+                margin: 3px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Banner -->
+    <header class="header">
+        <div class="header-content">
+            <h1>STAFF HIERARCHY</h1>
+            <p>Meet the team behind Paradise Roleplay Pakistan</p>
+        </div>
+    </header>
+    
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="index.html" class="nav-btn"><i class="fas fa-home"></i> Home</a>
+        <a href="about.html" class="nav-btn"><i class="fas fa-info-circle"></i> About</a>
+        <a href="rules/index.html" class="nav-btn"><i class="fas fa-book"></i> Rules</a>
+        <a href="staff.html" class="nav-btn active"><i class="fas fa-users"></i> Staff</a>
+        <a href="gangs.html" class="nav-btn"><i class="fas fa-mask"></i> Gangs</a>
+        <a href="wall-of-fame.html" class="nav-btn"><i class="fas fa-trophy"></i> Hall of Fame</a>
+        <a href="events.html" class="nav-btn"><i class="fas fa-calendar-star"></i> Events</a>
+        <a href="https://discord.gg/prpk" class="nav-btn" target="_blank"><i class="fab fa-discord"></i> Discord</a>
+    </nav>
+    
+    <!-- Staff Container -->
+    <div class="staff-container">
+        <!-- Tier 1: Server Owner (Alone) -->
+        <div class="staff-tier">
+            <div class="staff-card owner-card">
+                <img src="img/staff/desi_gabru.jpg" alt="Desi Gabru">
+                <div class="staff-role">SERVER OWNER</div>
+                <div class="staff-name">Desi Gabru</div>
+            </div>
+        </div>
+        
+        <!-- Tier 2: Project Management + Special Roles -->
+        <div>
+            <div class="tier-label">PROJECT TEAM</div>
+            <div class="staff-tier">
+                <div class="staff-card">
+                    <img src="img/staff/ali_ahmad.jpg" alt="Ali Ahmad">
+                    <div class="staff-role">PROJECT MANAGEMENT</div>
+                    <div class="staff-name">Ali Ahmad</div>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="img/staff/mrjayplays.jpg" alt="MrJayPlays">
+                    <div class="staff-role">MRJAYPLAYS</div>
+                    <div class="staff-name">MrJayPlays</div>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="img/staff/jani.jpg.png" alt="Jani">
+                    <div class="staff-role">JANI</div>
+                    <div class="staff-name">Jani</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tier 3: Server Management -->
+        <div>
+            <div class="tier-label">SERVER MANAGEMENT</div>
+            <div class="staff-tier">
+                <div class="staff-card">
+                    <img src="img/staff/pan.jpg" alt="Pan">
+                    <div class="staff-role">SERVER MANAGER</div>
+                    <div class="staff-name">Pan</div>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="img/staff/zigana.jpg" alt="Zigana">
+                    <div class="staff-role">SERVER MANAGER</div>
+                    <div class="staff-name">Zigana</div>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="img/staff/rt.jpg" alt="RT">
+                    <div class="staff-role">CHIEF ADMIN</div>
+                    <div class="staff-name">RT</div>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="img/staff/bullet_punjabi.jpg" alt="Bullet Punjabi">
+                    <div class="staff-role">CHIEF ADMIN</div>
+                    <div class="staff-name">Bullet Punjabi</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tier 4: Technical Team -->
+        <div>
+            <div class="tier-label">TECHNICAL TEAM</div>
+            <div class="staff-tier">
+                <div class="staff-card">
+                    <img src="img/staff/onni_uh.jpg" alt="Onni Uh">
+                    <div class="staff-role">DEVELOPER</div>
+                    <div class="staff-name">Onni Uh</div>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="img/staff/king.jpg" alt="King">
+                    <div class="staff-role">DDOS PROTECTION</div>
+                    <div class="staff-name">King</div>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="img/staff/smiley.jpg" alt="Smiley">
+                    <div class="staff-role">TECHNICAL ADMIN</div>
+                    <div class="staff-name">Smiley</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tier 5: Administrator Team -->
+        <div>
+            <div class="tier-label">ADMINISTRATOR TEAM</div>
+            <div class="staff-tier">
+                <div class="staff-card">
+                    <img src="img/staff/veshi.jpg" alt="Veshi">
+                    <div class="staff-role">CHIEF ADMIN</div>
+                    <div class="staff-name">Veshi</div>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="img/staff/rock.jpg" alt="Rock">
+                    <div class="staff-role">HEAD ADMIN</div>
+                    <div class="staff-name">Rock</div>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="img/staff/saif.jpg" alt="Saif">
+                    <div class="staff-role">ADMIN</div>
+                    <div class="staff-name">Saif</div>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="img/staff/kj.jpg" alt="KJ">
+                    <div class="staff-role">ADMIN</div>
+                    <div class="staff-name">KJ</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tier 6: Community Support -->
+        <div>
+            <div class="tier-label">COMMUNITY SUPPORT</div>
+            <div class="staff-tier">
+                <div class="staff-card">
+                    <img src="img/staff/bhola.jpg" alt="Bhola">
+                    <div class="staff-role">MODERATOR</div>
+                    <div class="staff-name">Bhola</div>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="img/staff/dexter.jpg" alt="Dexter">
+                    <div class="staff-role">SUPPORT</div>
+                    <div class="staff-name">Dexter</div>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="img/staff/usman.jpg" alt="Usman">
+                    <div class="staff-role">HELPER</div>
+                    <div class="staff-name">Usman</div>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="img/staff/bhatti.jpg" alt="Bhatti">
+                    <div class="staff-role">HELPER</div>
+                    <div class="staff-name">Bhatti</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="btn-container">
+            <a href="index.html" class="btn"><i class="fas fa-home"></i> Return to Home</a>
+            <a href="https://discord.gg/prpk" class="btn btn-discord"><i class="fab fa-discord"></i> Join Discord</a>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Paradise Roleplay Pakistan. All rights reserved.</p>
+        <div class="social-links">
+            <a href="https://discord.gg/prpk" target="_blank"><i class="fab fa-discord"></i></a>
+            <a href="https://www.youtube.com/@paradiseroleplaypk" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.instagram.com/theparadisehug/" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Paradise RP - Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --gold: #FFD700;
+            --dark-gold: #D4AF37;
+            --black: #121212;
+            --glass: rgba(18, 18, 18, 0.85);
+            --glass-light: rgba(255, 255, 255, 0.1);
+            --danger: #F44336;
+        }
+        
+        body {
+            background: var(--black);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .admin-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--gold);
+        }
+        
+        .admin-title {
+            color: var(--gold);
+            font-size: 2rem;
+        }
+        
+        .logout-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .admin-section {
+            background: var(--glass);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 5px;
+            color: white;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+        }
+        
+        .submit-btn {
+            background: var(--gold);
+            color: var(--black);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background: var(--dark-gold);
+        }
+        
+        .announcements-list {
+            margin-top: 30px;
+        }
+        
+        .announcement-item {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 3px solid var(--gold);
+        }
+        
+        .announcement-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .announcement-date {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 10px;
+        }
+        
+        .announcement-actions {
+            margin-top: 10px;
+        }
+        
+        .delete-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            background: var(--glass);
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .login-title {
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+        
+        .login-error {
+            color: var(--danger);
+            margin-top: 10px;
+            min-height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="login-form" class="login-container">
+        <h2 class="login-title">Admin Login</h2>
+        <div class="form-group">
+            <input type="email" id="email" class="form-control" placeholder="Email">
+        </div>
+        <div class="form-group">
+            <input type="password" id="password" class="form-control" placeholder="Password">
+        </div>
+        <button onclick="login()" class="submit-btn">Login</button>
+        <div id="login-error" class="login-error"></div>
+    </div>
+    
+    <div id="admin-panel" class="admin-container" style="display: none;">
+        <div class="admin-header">
+            <h1 class="admin-title">Paradise RP Admin Panel</h1>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+        
+        <div class="admin-section">
+            <h2 class="section-title">Create Announcement</h2>
+            <div class="form-group">
+                <label for="announcement-title">Title</label>
+                <input type="text" id="announcement-title" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="announcement-content">Content</label>
+                <textarea id="announcement-content" class="form-control"></textarea>
+            </div>
+            <button onclick="createAnnouncement()" class="submit-btn">Publish Announcement</button>
+        </div>
+        
+        <div class="admin-section">
+            <h2 class="section-title">Recent Announcements</h2>
+            <div id="announcements-list" class="announcements-list">
+                <!-- Announcements will load here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Configuration -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script>
+        // ===== Configuration ===== //
+        const FIREBASE_CONFIG = {
+            apiKey: "HHFEsM7jm1MJZlc5vSoHsB400hJ2",
+            authDomain: "paradiserppk.firebaseapp.com",
+            databaseURL: "https://paradiserppk.firebaseio.com",
+            projectId: "paradiserppk",
+            storageBucket: "paradiserppk.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abcdefghijklmnopqrstuv"
+        };
+        
+        const ADMIN_SECRET = "paradise@secure123"; // Change this to your secret
+        
+        // ===== Initialization ===== //
+        firebase.initializeApp(FIREBASE_CONFIG);
+        const auth = firebase.auth();
+        const db = firebase.database();
+        
+        // ===== Authentication ===== //
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                verifyAdmin(user);
+            } else {
+                showLogin();
+            }
+        });
+        
+        function verifyAdmin(user) {
+            // First check local session
+            if (sessionStorage.getItem('adminAuth') === ADMIN_SECRET) {
+                showAdminPanel();
+                loadAnnouncements();
+                return;
+            }
+            
+            // Fallback to Firebase check
+            db.ref('admins/' + user.uid).once('value').then(snapshot => {
+                if (snapshot.exists()) {
+                    sessionStorage.setItem('adminAuth', ADMIN_SECRET);
+                    showAdminPanel();
+                    loadAnnouncements();
+                } else {
+                    auth.signOut();
+                    showLogin();
+                }
+            });
+        }
+        
+        function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorElement = document.getElementById('login-error');
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .catch(error => {
+                    errorElement.textContent = error.message;
+                });
+        }
+        
+        function logout() {
+            sessionStorage.removeItem('adminAuth');
+            auth.signOut();
+        }
+        
+        // ===== Announcement Functions ===== //
+        function createAnnouncement() {
+            const title = document.getElementById('announcement-title').value;
+            const content = document.getElementById('announcement-content').value;
+            
+            if (!title || !content) {
+                alert('Please fill all fields');
+                return;
+            }
+            
+            // Add server-side verification token
+            db.ref('announcements').push({
+                title: title,
+                content: content,
+                timestamp: firebase.database.ServerValue.TIMESTAMP,
+                verified: ADMIN_SECRET // Hidden verification
+            }).then(() => {
+                document.getElementById('announcement-title').value = '';
+                document.getElementById('announcement-content').value = '';
+            });
+        }
+        
+        function loadAnnouncements() {
+            db.ref('announcements').orderByChild('timestamp').limitToLast(10).on('value', snapshot => {
+                const container = document.getElementById('announcements-list');
+                container.innerHTML = '';
+                
+                snapshot.forEach(childSnapshot => {
+                    const announcement = childSnapshot.val();
+                    
+                    // Verify announcement integrity
+                    if (announcement.verified !== ADMIN_SECRET) {
+                        db.ref('announcements/' + childSnapshot.key).remove();
+                        return;
+                    }
+                    
+                    const announcementElement = document.createElement('div');
+                    announcementElement.className = 'announcement-item';
+                    announcementElement.innerHTML = `
+                        <div class="announcement-title">${announcement.title}</div>
+                        <div class="announcement-date">${new Date(announcement.timestamp).toLocaleString()}</div>
+                        <div class="announcement-content">${announcement.content}</div>
+                        <div class="announcement-actions">
+                            <button class="delete-btn" onclick="deleteAnnouncement('${childSnapshot.key}')">Delete</button>
+                        </div>
+                    `;
+                    container.prepend(announcementElement);
+                });
+            });
+        }
+        
+        function deleteAnnouncement(key) {
+            if (confirm('Are you sure you want to delete this announcement?')) {
+                db.ref('announcements/' + key).remove();
+            }
+        }
+        
+        // ===== UI Helpers ===== //
+        function showLogin() {
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('admin-panel').style.display = 'none';
+        }
+        
+        function showAdminPanel() {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
